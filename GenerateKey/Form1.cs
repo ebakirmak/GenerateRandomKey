@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -16,51 +17,73 @@ namespace GenerateKey
         public frmKeyGenerate()
         {
             InitializeComponent();
+            dosya = new Dossier();
         }
         private string []  hexDecimals;
         private string[] randomKey;
+        public Dossier dosya { get; set; }
+        private bool state = false;
+
+        private void Wait()
+        {
+            Thread.Sleep(1000);
+        }
+
         private void btnGenerate_Click(object sender, EventArgs e)
         {
+            
+
+           
             int CountDay = 0;
             int KeyLength = 0;
             CountDay = ControlKeyCount(cmbCountDay.Text.ToString());
             hexDecimals = new string[CountDay];
             randomKey = new string[CountDay];
-            if (rdoAES.Checked == true && cmbCountDay.Text != "")
-            {
-
-               
+            if (rdoAES.Checked == true && cmbCountDay.Text != ""&&txtLocation.Text!="")
+            {               
                 if (AESKeyLength(cmbKeyLength.Text) == true &&CountDay!=0)
                 {
                     KeyLength = Convert.ToInt32(cmbKeyLength.Text.Split(' ')[0]);
-                    randomKey = GenerateRandomKey(KeyLength, CountDay);
-                   
-                    writeToFile(hexDecimals, CountDay);
-                    MessageBox.Show("AES Key Generate Successful");
-
+                    randomKey = GenerateRandomKey(KeyLength, CountDay);                   
+                    dosya.writeToFile(hexDecimals, CountDay,randomKey);
+                    state = true;
                 }
-
             }
-            else if (rdoBlowFish.Checked == true  && cmbCountDay.Text!="")
+            else if (rdoBlowFish.Checked == true  && cmbCountDay.Text!="" && txtLocation.Text != "")
             {
                 if (BlowFishKeyLength(cmbKeyLength.Text) == true && CountDay != 0)
                 {
                     KeyLength = Convert.ToInt32(cmbKeyLength.Text.Split(' ')[0]);
                     randomKey = GenerateRandomKey(KeyLength, CountDay);
-                    writeToFile(hexDecimals, CountDay);
-                    MessageBox.Show("BlowFish Key Successful");
+                    dosya.writeToFile(hexDecimals, CountDay,randomKey);
+                    state = true;
                 }
-           
             }
             else
             {
-                if (cmbCountDay.Text != "")
-                     MessageBox.Show("Please Select a algorithm");
-                else if(cmbCountDay.Text == "")
-                    MessageBox.Show("Please Select Key Count");
+                lblError.Text = "Wrong or missing input." + Environment.NewLine + "Please Check informations";
+                //if (cmbCountDay.Text == "")
+                //     MessageBox.Show("Please Select a algorithm");
+                //else if(cmbCountDay.Text == "")
+                //    MessageBox.Show("Please Select Key Count");
+                //else if(txtLocation.Text== "")
+                //    MessageBox.Show("Please Choose Location");
+            }
 
-            }          
-   
+            if (state == true)
+            {
+
+                lblError.Text = "Keys are generating. Please wait...";
+                Thread threadWait = new Thread(new ThreadStart(Wait));
+                threadWait.Start();
+                threadWait.Join();
+                lblError.Text = "Keys are successfully generated";
+                state = false;
+            }
+            
+         
+
+
         }
 
         #region Control Key Count and set Key Count
@@ -72,7 +95,11 @@ namespace GenerateKey
             else if (Count == "Monthly")
                 count = 30;
             else
-            { count = 0; MessageBox.Show("Please Select Key Count"); }
+            {
+              count = 0;
+                //MessageBox.Show("Please Select Key Count");
+                lblError.Text = "Wrong or missing input"+Environment.NewLine+"Please Check informations";
+            }
 
             return count;
         }
@@ -164,28 +191,7 @@ namespace GenerateKey
 
              return hex;
          }*/
-        #endregion
-
-
-        #region Write to file all random key in hex format 
-        public void writeToFile(string[] strKeys, int countDay)
-        {
-
-            string filePath = @"Keys.txt";
-            FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write);
-            StreamWriter sw = new StreamWriter(fs);
-            DateTime today = DateTime.Today;
-
-            for (int i = 0; i < countDay; i++)
-            {
-                sw.WriteLine(today.ToShortDateString() + "  " + (i + 1) + ".Key: " + hexDecimals[i]+"   Random Key: "+randomKey[i]);
-                today = today.AddDays(1);
-            }
-            sw.Flush();
-            sw.Close();
-            fs.Close();
-        }
-        #endregion
+        #endregion      
 
         #region Show bit value by algorith in combobox object
         private void cmbKeyLength_Click(object sender, EventArgs e)
@@ -223,6 +229,21 @@ namespace GenerateKey
         private void frmKeyGenerate_Load(object sender, EventArgs e)
         {
            
+        }
+
+        private void btnLocation_Click(object sender, EventArgs e)
+        {
+            string FilePath = dosya.ChooseLocation();
+            if (FilePath != "-1")
+                txtLocation.Text = FilePath;
+            else
+                txtLocation.Text = "";
+            
+        }
+
+        private void txtLocation_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }
