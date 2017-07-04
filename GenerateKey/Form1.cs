@@ -30,9 +30,9 @@ namespace GenerateKey
             {
 
                
-                if (AESKeyLength(txtKeyLength.Text) == true &&CountDay!=0)
+                if (AESKeyLength(cmbKeyLength.Text) == true &&CountDay!=0)
                 {
-                    KeyLength = Convert.ToInt32(txtKeyLength.Text);
+                    KeyLength = Convert.ToInt32(cmbKeyLength.Text.Split(' ')[0]);
                     randomKey = GenerateRandomKey(KeyLength, CountDay);
                    
                     writeToFile(hexDecimals, CountDay);
@@ -43,10 +43,9 @@ namespace GenerateKey
             }
             else if (rdoBlowFish.Checked == true  && cmbCountDay.Text!="")
             {
-               // CountDay = ControlKeyCount(cmbCountDay.Text.ToString());
-                if (BlowFishKeyLength(txtKeyLength.Text) == true && CountDay != 0)
+                if (BlowFishKeyLength(cmbKeyLength.Text) == true && CountDay != 0)
                 {
-                    KeyLength = Convert.ToInt32(txtKeyLength.Text);
+                    KeyLength = Convert.ToInt32(cmbKeyLength.Text.Split(' ')[0]);
                     randomKey = GenerateRandomKey(KeyLength, CountDay);
                     writeToFile(hexDecimals, CountDay);
                     MessageBox.Show("BlowFish Key Successful");
@@ -84,7 +83,7 @@ namespace GenerateKey
         {
             try
             {
-                int len = Convert.ToInt32(KeyLength);
+                int len = Convert.ToInt32(KeyLength.Split(' ')[0]);
                 if (len == 128 || len == 192 || len == 256)
                     return true;
                 else
@@ -108,7 +107,7 @@ namespace GenerateKey
         {
             try
             {
-                int len = Convert.ToInt32(KeyLength);
+                int len = Convert.ToInt32(KeyLength.Split(' ')[0]);
                 if (len >= 32 && len <= 448 && len % 8 == 0)
                     return true;
                 else {
@@ -118,7 +117,7 @@ namespace GenerateKey
             }
             catch (Exception ex)
             {
-                MessageBox.Show("AES Key is Wrong");
+                MessageBox.Show("BlowFish Key is Wrong");
                 ex.ToString();
                 return false;
             }
@@ -183,6 +182,35 @@ namespace GenerateKey
             sw.Flush();
             sw.Close();
             fs.Close();
+        }
+
+        private void cmbKeyLength_Click(object sender, EventArgs e)
+        {
+            if (rdoAES.Checked==true)
+            {
+                cmbKeyLength.Items.Clear();
+                cmbKeyLength.Items.Add("128 Bit");
+                cmbKeyLength.Items.Add("192 Bit");
+                cmbKeyLength.Items.Add("256 Bit");
+            }
+            else if (rdoBlowFish.Checked == true)
+            {
+                cmbKeyLength.Items.Clear();
+                for (int i = 32; i <= 448; i+=8)
+                {
+                    cmbKeyLength.Items.Add(i + " Bit");
+                }
+            }
+            else
+            {
+                cmbKeyLength.Items.Clear();
+                cmbKeyLength.Items.Add("Select a Algorithm");
+            }
+        }
+
+        private void rdoAES_CheckedChanged(object sender, EventArgs e)
+        {
+            cmbKeyLength.Text = "";
         }
     }
 }

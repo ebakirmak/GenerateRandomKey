@@ -31,12 +31,12 @@
             this.lblAlgorithm = new System.Windows.Forms.Label();
             this.lblKeyLength = new System.Windows.Forms.Label();
             this.btnGenerate = new System.Windows.Forms.Button();
-            this.txtKeyLength = new System.Windows.Forms.TextBox();
             this.cmbCountDay = new System.Windows.Forms.ComboBox();
             this.lblCount = new System.Windows.Forms.Label();
             this.rdoAES = new System.Windows.Forms.RadioButton();
             this.grpAlgorithm = new System.Windows.Forms.GroupBox();
             this.rdoBlowFish = new System.Windows.Forms.RadioButton();
+            this.cmbKeyLength = new System.Windows.Forms.ComboBox();
             this.grpAlgorithm.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,14 +71,6 @@
             this.btnGenerate.UseVisualStyleBackColor = true;
             this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
             // 
-            // txtKeyLength
-            // 
-            this.txtKeyLength.Location = new System.Drawing.Point(262, 95);
-            this.txtKeyLength.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.txtKeyLength.Name = "txtKeyLength";
-            this.txtKeyLength.Size = new System.Drawing.Size(199, 26);
-            this.txtKeyLength.TabIndex = 3;
-            // 
             // cmbCountDay
             // 
             this.cmbCountDay.FormattingEnabled = true;
@@ -112,6 +104,7 @@
             this.rdoAES.TabStop = true;
             this.rdoAES.Text = "AES";
             this.rdoAES.UseVisualStyleBackColor = true;
+            this.rdoAES.CheckedChanged += new System.EventHandler(this.rdoAES_CheckedChanged);
             // 
             // grpAlgorithm
             // 
@@ -134,16 +127,29 @@
             this.rdoBlowFish.Text = "BlowFish";
             this.rdoBlowFish.UseVisualStyleBackColor = true;
             // 
+            // cmbKeyLength
+            // 
+            this.cmbKeyLength.DropDownHeight = 100;
+            this.cmbKeyLength.DropDownWidth = 199;
+            this.cmbKeyLength.FormattingEnabled = true;
+            this.cmbKeyLength.IntegralHeight = false;
+            this.cmbKeyLength.Location = new System.Drawing.Point(262, 98);
+            this.cmbKeyLength.MaxDropDownItems = 4;
+            this.cmbKeyLength.Name = "cmbKeyLength";
+            this.cmbKeyLength.Size = new System.Drawing.Size(199, 28);
+            this.cmbKeyLength.TabIndex = 11;
+            this.cmbKeyLength.Click += new System.EventHandler(this.cmbKeyLength_Click);
+            // 
             // frmKeyGenerate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(604, 282);
+            this.Controls.Add(this.cmbKeyLength);
             this.Controls.Add(this.grpAlgorithm);
             this.Controls.Add(this.lblCount);
             this.Controls.Add(this.cmbCountDay);
             this.Controls.Add(this.btnGenerate);
-            this.Controls.Add(this.txtKeyLength);
             this.Controls.Add(this.lblKeyLength);
             this.Controls.Add(this.lblAlgorithm);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
@@ -164,12 +170,12 @@
         private System.Windows.Forms.Label lblAlgorithm;
         private System.Windows.Forms.Label lblKeyLength;
         private System.Windows.Forms.Button btnGenerate;
-        private System.Windows.Forms.TextBox txtKeyLength;
         private System.Windows.Forms.ComboBox cmbCountDay;
         private System.Windows.Forms.Label lblCount;
         private System.Windows.Forms.RadioButton rdoAES;
         private System.Windows.Forms.GroupBox grpAlgorithm;
         private System.Windows.Forms.RadioButton rdoBlowFish;
+        private System.Windows.Forms.ComboBox cmbKeyLength;
     }
 }
 
