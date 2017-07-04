@@ -37,7 +37,6 @@
             this.rdoAES = new System.Windows.Forms.RadioButton();
             this.grpAlgorithm = new System.Windows.Forms.GroupBox();
             this.rdoBlowFish = new System.Windows.Forms.RadioButton();
-            this.cmbKeyLength = new System.Windows.Forms.ComboBox();
             this.grpAlgorithm.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -135,20 +134,11 @@
             this.rdoBlowFish.Text = "BlowFish";
             this.rdoBlowFish.UseVisualStyleBackColor = true;
             // 
-            // cmbKeyLength
-            // 
-            this.cmbKeyLength.FormattingEnabled = true;
-            this.cmbKeyLength.Location = new System.Drawing.Point(44, 197);
-            this.cmbKeyLength.Name = "cmbKeyLength";
-            this.cmbKeyLength.Size = new System.Drawing.Size(145, 28);
-            this.cmbKeyLength.TabIndex = 11;
-            // 
             // frmKeyGenerate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(604, 282);
-            this.Controls.Add(this.cmbKeyLength);
             this.Controls.Add(this.grpAlgorithm);
             this.Controls.Add(this.lblCount);
             this.Controls.Add(this.cmbCountDay);
@@ -180,7 +170,6 @@
         private System.Windows.Forms.RadioButton rdoAES;
         private System.Windows.Forms.GroupBox grpAlgorithm;
         private System.Windows.Forms.RadioButton rdoBlowFish;
-        private System.Windows.Forms.ComboBox cmbKeyLength;
     }
 }
 
