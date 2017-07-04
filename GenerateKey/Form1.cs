@@ -151,21 +151,23 @@ namespace GenerateKey
         #endregion
 
         #region Convert String to Hex
-       /* private string[] ConvertToHex(string [] randomKeys, int countDay)
-        {
-            string[] hex = new string[countDay];
-            for (int i = 0; i < countDay; i++)
-            {
-                byte[] bytes = Encoding.Default.GetBytes(randomKeys[i]);
-                var hexString = BitConverter.ToString(bytes);
-                hexString = hexString.Replace("-", "");
-                hex[i] = hexString;
-            }
+        /* private string[] ConvertToHex(string [] randomKeys, int countDay)
+         {
+             string[] hex = new string[countDay];
+             for (int i = 0; i < countDay; i++)
+             {
+                 byte[] bytes = Encoding.Default.GetBytes(randomKeys[i]);
+                 var hexString = BitConverter.ToString(bytes);
+                 hexString = hexString.Replace("-", "");
+                 hex[i] = hexString;
+             }
 
-            return hex;
-        }*/
+             return hex;
+         }*/
         #endregion
 
+
+        #region Write to file all random key in hex format 
         public void writeToFile(string[] strKeys, int countDay)
         {
 
@@ -183,7 +185,9 @@ namespace GenerateKey
             sw.Close();
             fs.Close();
         }
+        #endregion
 
+        #region Show bit value by algorith in combobox object
         private void cmbKeyLength_Click(object sender, EventArgs e)
         {
             if (rdoAES.Checked==true)
@@ -204,13 +208,21 @@ namespace GenerateKey
             else
             {
                 cmbKeyLength.Items.Clear();
-                cmbKeyLength.Items.Add("Select a Algorithm");
+                cmbKeyLength.Text="Select a Algorithm";
             }
         }
+        #endregion
 
+        #region Clear combobox object
         private void rdoAES_CheckedChanged(object sender, EventArgs e)
         {
             cmbKeyLength.Text = "";
+        }
+        #endregion
+
+        private void frmKeyGenerate_Load(object sender, EventArgs e)
+        {
+           
         }
     }
 }

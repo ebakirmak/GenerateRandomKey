@@ -43,7 +43,7 @@
             // lblAlgorithm
             // 
             this.lblAlgorithm.AutoSize = true;
-            this.lblAlgorithm.Location = new System.Drawing.Point(99, 62);
+            this.lblAlgorithm.Location = new System.Drawing.Point(31, 46);
             this.lblAlgorithm.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAlgorithm.Name = "lblAlgorithm";
             this.lblAlgorithm.Size = new System.Drawing.Size(133, 20);
@@ -53,7 +53,7 @@
             // lblKeyLength
             // 
             this.lblKeyLength.AutoSize = true;
-            this.lblKeyLength.Location = new System.Drawing.Point(98, 106);
+            this.lblKeyLength.Location = new System.Drawing.Point(30, 90);
             this.lblKeyLength.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblKeyLength.Name = "lblKeyLength";
             this.lblKeyLength.Size = new System.Drawing.Size(134, 20);
@@ -62,10 +62,10 @@
             // 
             // btnGenerate
             // 
-            this.btnGenerate.Location = new System.Drawing.Point(308, 177);
+            this.btnGenerate.Location = new System.Drawing.Point(221, 177);
             this.btnGenerate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnGenerate.Name = "btnGenerate";
-            this.btnGenerate.Size = new System.Drawing.Size(112, 35);
+            this.btnGenerate.Size = new System.Drawing.Size(158, 35);
             this.btnGenerate.TabIndex = 4;
             this.btnGenerate.Text = "Generate";
             this.btnGenerate.UseVisualStyleBackColor = true;
@@ -77,7 +77,7 @@
             this.cmbCountDay.Items.AddRange(new object[] {
             "Weekly",
             "Monthly"});
-            this.cmbCountDay.Location = new System.Drawing.Point(262, 135);
+            this.cmbCountDay.Location = new System.Drawing.Point(194, 119);
             this.cmbCountDay.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmbCountDay.Name = "cmbCountDay";
             this.cmbCountDay.Size = new System.Drawing.Size(199, 28);
@@ -87,7 +87,7 @@
             // lblCount
             // 
             this.lblCount.AutoSize = true;
-            this.lblCount.Location = new System.Drawing.Point(144, 143);
+            this.lblCount.Location = new System.Drawing.Point(76, 127);
             this.lblCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCount.Name = "lblCount";
             this.lblCount.Size = new System.Drawing.Size(88, 20);
@@ -110,7 +110,7 @@
             // 
             this.grpAlgorithm.Controls.Add(this.rdoBlowFish);
             this.grpAlgorithm.Controls.Add(this.rdoAES);
-            this.grpAlgorithm.Location = new System.Drawing.Point(262, 34);
+            this.grpAlgorithm.Location = new System.Drawing.Point(194, 18);
             this.grpAlgorithm.Name = "grpAlgorithm";
             this.grpAlgorithm.Size = new System.Drawing.Size(203, 48);
             this.grpAlgorithm.TabIndex = 10;
@@ -133,18 +133,19 @@
             this.cmbKeyLength.DropDownWidth = 199;
             this.cmbKeyLength.FormattingEnabled = true;
             this.cmbKeyLength.IntegralHeight = false;
-            this.cmbKeyLength.Location = new System.Drawing.Point(262, 98);
+            this.cmbKeyLength.Location = new System.Drawing.Point(194, 82);
             this.cmbKeyLength.MaxDropDownItems = 4;
             this.cmbKeyLength.Name = "cmbKeyLength";
             this.cmbKeyLength.Size = new System.Drawing.Size(199, 28);
             this.cmbKeyLength.TabIndex = 11;
+            this.cmbKeyLength.Text = "Select a Algorithm";
             this.cmbKeyLength.Click += new System.EventHandler(this.cmbKeyLength_Click);
             // 
             // frmKeyGenerate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(604, 282);
+            this.ClientSize = new System.Drawing.Size(510, 249);
             this.Controls.Add(this.cmbKeyLength);
             this.Controls.Add(this.grpAlgorithm);
             this.Controls.Add(this.lblCount);
@@ -158,6 +159,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Tag = "alg";
             this.Text = "KEY GENERATOR";
+            this.Load += new System.EventHandler(this.frmKeyGenerate_Load);
             this.grpAlgorithm.ResumeLayout(false);
             this.grpAlgorithm.PerformLayout();
             this.ResumeLayout(false);
