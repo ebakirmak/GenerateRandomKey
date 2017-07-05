@@ -23,7 +23,8 @@ namespace GenerateKey
         private string[] randomKey;
         public Dossier dosya { get; set; }
         private bool state = false;
-
+        private DateTime dateStart;
+        private DateTime dateEnd;
         private void Wait()
         {
             Thread.Sleep(1000);
@@ -36,10 +37,15 @@ namespace GenerateKey
            
             int CountDay = 0;
             int KeyLength = 0;
-            CountDay = ControlKeyCount(cmbCountDay.Text.ToString());
+
+            dateStart = dtpStart.Value.Date;
+            dateEnd = dtpEnd.Value.Date;
+
+            CountDay = ControlKeyCount(dateStart,dateEnd);
+
             hexDecimals = new string[CountDay];
             randomKey = new string[CountDay];
-            if (rdoAES.Checked == true && cmbCountDay.Text != ""&&txtLocation.Text!="")
+            if (rdoAES.Checked == true)
             {               
                 if (AESKeyLength(cmbKeyLength.Text) == true &&CountDay!=0)
                 {
@@ -49,7 +55,7 @@ namespace GenerateKey
                         state = true;
                 }
             }
-            else if (rdoBlowFish.Checked == true  && cmbCountDay.Text!="" && txtLocation.Text != "")
+            else if (rdoBlowFish.Checked == true)
             {
                 if (BlowFishKeyLength(cmbKeyLength.Text) == true && CountDay != 0)
                 {
@@ -62,8 +68,8 @@ namespace GenerateKey
             else
             {
                 // lblError.Text = "Wrong or missing input." + Environment.NewLine + "Please Check informations";
-                 if (txtLocation.Text == "")
-                    lblError.Text = "Please Choose Location";
+                /* if (txtLocation.Text == "")
+                    lblError.Text = "Please Choose Location";*/
             }
 
             if (state == true)
@@ -83,21 +89,11 @@ namespace GenerateKey
         }
 
         #region Control Key Count and set Key Count
-        private int ControlKeyCount(String Count)
+        private int ControlKeyCount(DateTime start, DateTime end)
         {
-            int count = 0;
-            if (Count == "Weekly")
-                count = 7;
-            else if (Count == "Monthly")
-                count = 30;
-            else
-            {
-              count = 0;
-                //MessageBox.Show("Please Select Key Count");
-                lblError.Text = "Wrong or missing input"+Environment.NewLine+"Please Check informations";
-            }
-
-            return count;
+            TimeSpan different = new TimeSpan();
+            different = end - start;
+            return different.Days+1;
         }
         #endregion
 
@@ -216,15 +212,6 @@ namespace GenerateKey
         }
         #endregion
 
-        private void btnLocation_Click(object sender, EventArgs e)
-        {
-            string FilePath = dosya.ChooseLocation();
-            if (FilePath != "-1")
-                txtLocation.Text = FilePath;
-            else
-                txtLocation.Text = "";
-            
-        }
 
         private void txtLocation_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -234,7 +221,12 @@ namespace GenerateKey
         private void frmKeyGenerate_Load(object sender, EventArgs e)
         {
             rdoAES.Checked = true;
-            cmbCountDay.Text = cmbCountDay.Items[0].ToString();
+           
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

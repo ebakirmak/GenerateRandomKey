@@ -31,18 +31,13 @@
             this.lblAlgorithm = new System.Windows.Forms.Label();
             this.lblKeyLength = new System.Windows.Forms.Label();
             this.btnGenerate = new System.Windows.Forms.Button();
-            this.cmbCountDay = new System.Windows.Forms.ComboBox();
-            this.lblCount = new System.Windows.Forms.Label();
             this.rdoAES = new System.Windows.Forms.RadioButton();
             this.rdoBlowFish = new System.Windows.Forms.RadioButton();
             this.cmbKeyLength = new System.Windows.Forms.ComboBox();
-            this.btnLocation = new System.Windows.Forms.Button();
-            this.txtLocation = new System.Windows.Forms.TextBox();
             this.lblError = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.lblLocation = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox1.SuspendLayout();
+            this.dtpEnd = new System.Windows.Forms.DateTimePicker();
+            this.dtpStart = new System.Windows.Forms.DateTimePicker();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,35 +61,13 @@
             // 
             // btnGenerate
             // 
-            this.btnGenerate.Location = new System.Drawing.Point(115, 170);
+            this.btnGenerate.Location = new System.Drawing.Point(115, 158);
             this.btnGenerate.Name = "btnGenerate";
             this.btnGenerate.Size = new System.Drawing.Size(105, 23);
             this.btnGenerate.TabIndex = 4;
             this.btnGenerate.Text = "Generate";
             this.btnGenerate.UseVisualStyleBackColor = true;
             this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
-            // 
-            // cmbCountDay
-            // 
-            this.cmbCountDay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbCountDay.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.cmbCountDay.FormattingEnabled = true;
-            this.cmbCountDay.Items.AddRange(new object[] {
-            "Weekly",
-            "Monthly"});
-            this.cmbCountDay.Location = new System.Drawing.Point(115, 96);
-            this.cmbCountDay.Name = "cmbCountDay";
-            this.cmbCountDay.Size = new System.Drawing.Size(291, 24);
-            this.cmbCountDay.TabIndex = 7;
-            // 
-            // lblCount
-            // 
-            this.lblCount.AutoSize = true;
-            this.lblCount.Location = new System.Drawing.Point(9, 102);
-            this.lblCount.Name = "lblCount";
-            this.lblCount.Size = new System.Drawing.Size(56, 13);
-            this.lblCount.TabIndex = 8;
-            this.lblCount.Text = "Key Count";
             // 
             // rdoAES
             // 
@@ -135,29 +108,8 @@
             this.cmbKeyLength.Margin = new System.Windows.Forms.Padding(2);
             this.cmbKeyLength.MaxDropDownItems = 4;
             this.cmbKeyLength.Name = "cmbKeyLength";
-            this.cmbKeyLength.Size = new System.Drawing.Size(291, 24);
+            this.cmbKeyLength.Size = new System.Drawing.Size(147, 24);
             this.cmbKeyLength.TabIndex = 11;
-            // 
-            // btnLocation
-            // 
-            this.btnLocation.Location = new System.Drawing.Point(295, 10);
-            this.btnLocation.Margin = new System.Windows.Forms.Padding(2);
-            this.btnLocation.Name = "btnLocation";
-            this.btnLocation.Size = new System.Drawing.Size(26, 20);
-            this.btnLocation.TabIndex = 12;
-            this.btnLocation.Text = "...";
-            this.btnLocation.UseVisualStyleBackColor = true;
-            this.btnLocation.Click += new System.EventHandler(this.btnLocation_Click);
-            // 
-            // txtLocation
-            // 
-            this.txtLocation.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.txtLocation.Location = new System.Drawing.Point(1, 10);
-            this.txtLocation.Margin = new System.Windows.Forms.Padding(2);
-            this.txtLocation.Name = "txtLocation";
-            this.txtLocation.Size = new System.Drawing.Size(290, 20);
-            this.txtLocation.TabIndex = 13;
-            this.txtLocation.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLocation_KeyPress);
             // 
             // lblError
             // 
@@ -170,48 +122,41 @@
             this.lblError.Size = new System.Drawing.Size(0, 16);
             this.lblError.TabIndex = 14;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.btnLocation);
-            this.groupBox1.Controls.Add(this.txtLocation);
-            this.groupBox1.Location = new System.Drawing.Point(115, 125);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(325, 37);
-            this.groupBox1.TabIndex = 15;
-            this.groupBox1.TabStop = false;
-            // 
-            // lblLocation
-            // 
-            this.lblLocation.AutoSize = true;
-            this.lblLocation.Location = new System.Drawing.Point(9, 142);
-            this.lblLocation.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblLocation.Name = "lblLocation";
-            this.lblLocation.Size = new System.Drawing.Size(48, 13);
-            this.lblLocation.TabIndex = 16;
-            this.lblLocation.Text = "Location";
-            // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.dtpEnd);
+            this.groupBox2.Controls.Add(this.dtpStart);
             this.groupBox2.Controls.Add(this.rdoBlowFish);
             this.groupBox2.Controls.Add(this.btnGenerate);
             this.groupBox2.Controls.Add(this.rdoAES);
-            this.groupBox2.Controls.Add(this.lblLocation);
             this.groupBox2.Controls.Add(this.lblKeyLength);
-            this.groupBox2.Controls.Add(this.groupBox1);
             this.groupBox2.Controls.Add(this.cmbKeyLength);
             this.groupBox2.Controls.Add(this.lblError);
             this.groupBox2.Controls.Add(this.lblAlgorithm);
-            this.groupBox2.Controls.Add(this.lblCount);
-            this.groupBox2.Controls.Add(this.cmbCountDay);
             this.groupBox2.Location = new System.Drawing.Point(8, 8);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox2.Size = new System.Drawing.Size(595, 298);
+            this.groupBox2.Size = new System.Drawing.Size(373, 298);
             this.groupBox2.TabIndex = 17;
             this.groupBox2.TabStop = false;
+            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
+            // 
+            // dtpEnd
+            // 
+            this.dtpEnd.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpEnd.Location = new System.Drawing.Point(116, 123);
+            this.dtpEnd.Name = "dtpEnd";
+            this.dtpEnd.Size = new System.Drawing.Size(146, 20);
+            this.dtpEnd.TabIndex = 21;
+            // 
+            // dtpStart
+            // 
+            this.dtpStart.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpStart.Location = new System.Drawing.Point(115, 97);
+            this.dtpStart.Name = "dtpStart";
+            this.dtpStart.Size = new System.Drawing.Size(147, 20);
+            this.dtpStart.TabIndex = 19;
             // 
             // frmKeyGenerate
             // 
@@ -226,8 +171,6 @@
             this.Tag = "alg";
             this.Text = "ENCRYPTİON KEY GENERATOR SW ";
             this.Load += new System.EventHandler(this.frmKeyGenerate_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
@@ -239,17 +182,13 @@
         private System.Windows.Forms.Label lblAlgorithm;
         private System.Windows.Forms.Label lblKeyLength;
         private System.Windows.Forms.Button btnGenerate;
-        private System.Windows.Forms.ComboBox cmbCountDay;
-        private System.Windows.Forms.Label lblCount;
         private System.Windows.Forms.RadioButton rdoAES;
         private System.Windows.Forms.RadioButton rdoBlowFish;
         private System.Windows.Forms.ComboBox cmbKeyLength;
-        private System.Windows.Forms.TextBox txtLocation;
-        private System.Windows.Forms.Button btnLocation;
         private System.Windows.Forms.Label lblError;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label lblLocation;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.DateTimePicker dtpEnd;
+        private System.Windows.Forms.DateTimePicker dtpStart;
     }
 }
 

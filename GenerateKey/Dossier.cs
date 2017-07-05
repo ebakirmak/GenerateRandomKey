@@ -15,9 +15,8 @@ namespace GenerateKey
         public StreamWriter fileWrite { get; set; }
         DateTime time;
         public Dossier()
-        {        
-            this.FilePath = "";
-
+        {
+           
         }
 
         #region Write to file all random key in hex format 
@@ -26,6 +25,7 @@ namespace GenerateKey
             bool state = true;
             try
             {
+                EditFilePath();
                this.file = new FileStream(FilePath, FileMode.Create, FileAccess.ReadWrite);
                this.fileWrite = new StreamWriter(file);
                this.time = DateTime.Today;
@@ -35,8 +35,7 @@ namespace GenerateKey
                     fileWrite.WriteLine(time.ToShortDateString() + "  " + (i + 1) + ".Key: " + hexDecimals[i] + "   Random Key: " + randomKey[i]);
                     time = time.AddDays(1);
                 }
-                object m = null;
-                string s = m.ToString();
+               
             }
             catch (Exception ex)
             {
@@ -60,43 +59,20 @@ namespace GenerateKey
         }
         #endregion
 
-        #region Set FilePath value
-        public bool setFilePath (string filePath)
+        private void EditFilePath()
         {
-            
-            try
-            {
-                if (filePath.Length > 0)
-                {
-                    this.FilePath = filePath;
-                    return true;
-                }
-                else
-                    return false;
-            }
-            catch (Exception ex)
-            {
-                ex.ToString();
-                return false;
-            }
-        }
-        #endregion
+            //get document path in pc
+            string path = Directory.GetParent(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)).FullName;
+            //if dont have EncryKey folder, its creates a EncryKey 
+            if (!Directory.Exists(path + @"\EncryKey"))
+                Directory.CreateDirectory(path + @"\EncryKey");
+            //created date of file 
+            time = DateTime.Now;
+            //set document path and name
+            this.FilePath = path + @"\EncryKey\EncrKey_" + time.ToShortDateString() + "_" + time.ToLongTimeString().ToString().Replace(":", "-") + ".txt";
 
-        #region Folder Browse Dialog
-        public string ChooseLocation()
-        {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-        
-            if (fbd.ShowDialog() == DialogResult.OK) { 
-           this.FilePath = fbd.SelectedPath+"\\Keys.txt";
-                return FilePath;
-            }
-            else
-            {
-                return "-1";
-            }
-         
         }
-        #endregion
+
+
     }
 }
