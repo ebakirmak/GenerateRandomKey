@@ -32,7 +32,7 @@ namespace GenerateKey
                
                 for (int i = 0; i < countDay; i++)
                 {
-                    fileWrite.WriteLine(time.ToShortDateString() + "  " + (i + 1) + ".Key: " + hexDecimals[i] + "   Random Key: " + randomKey[i]);
+                    fileWrite.WriteLine(time.ToShortDateString() + "  " + (i + 1) + ".Key: " + hexDecimals[i]);
                     time = time.AddDays(1);
                 }
                
@@ -62,17 +62,21 @@ namespace GenerateKey
         private void EditFilePath()
         {
             //get document path in pc
-            string path = Directory.GetParent(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)).FullName;
+            string path = Directory.GetParent(Environment.GetFolderPath(Environment.SpecialFolder.Desktop)).FullName;
             //if dont have EncryKey folder, its creates a EncryKey 
-            if (!Directory.Exists(path + @"\EncryKey"))
-                Directory.CreateDirectory(path + @"\EncryKey");
+            if (!Directory.Exists(path + @"\EncKey"))
+                Directory.CreateDirectory(path + @"\EncKey");
             //created date of file 
             time = DateTime.Now;
             //set document path and name
-            this.FilePath = path + @"\EncryKey\EncrKey_" + time.ToShortDateString() + "_" + time.ToLongTimeString().ToString().Replace(":", "-") + ".txt";
+            this.FilePath = path + @"\EncKey\EncKey_" + time.ToShortDateString() + "_" + time.ToLongTimeString().ToString().Replace(":", "") + ".txt";
 
         }
 
+        public string getFilePath()
+        {
+            return this.FilePath;
+        }
 
     }
 }

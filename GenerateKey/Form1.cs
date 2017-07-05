@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,61 +33,101 @@ namespace GenerateKey
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
-            
+            lblLink.Text = "";
 
-           
+
             int CountDay = 0;
             int KeyLength = 0;
 
             dateStart = dtpStart.Value.Date;
             dateEnd = dtpEnd.Value.Date;
 
-            CountDay = ControlKeyCount(dateStart,dateEnd);
+            if (ControlCalendar(dateStart, dateEnd) == 1)
+            {
+                CountDay = ControlKeyCount(dateStart, dateEnd);
 
-            hexDecimals = new string[CountDay];
-            randomKey = new string[CountDay];
-            if (rdoAES.Checked == true)
-            {               
-                if (AESKeyLength(cmbKeyLength.Text) == true &&CountDay!=0)
+                hexDecimals = new string[CountDay];
+                randomKey = new string[CountDay];
+                if (rdoAES.Checked == true)
                 {
-                    KeyLength = Convert.ToInt32(cmbKeyLength.Text.Split(' ')[0]);
-                    randomKey = GenerateRandomKey(KeyLength, CountDay);                   
-                    if(dosya.writeToFile(hexDecimals, CountDay,randomKey)==true)
-                        state = true;
+                    if (AESKeyLength(cmbKeyLength.Text) == true && CountDay != 0)
+                    {
+                        KeyLength = Convert.ToInt32(cmbKeyLength.Text.Split(' ')[0]);
+                        randomKey = GenerateRandomKey(KeyLength, CountDay);
+                        if (dosya.writeToFile(hexDecimals, CountDay, randomKey) == true)
+                            state = true;
+                    }
+                }
+                else if (rdoBlowFish.Checked == true)
+                {
+                    if (BlowFishKeyLength(cmbKeyLength.Text) == true && CountDay != 0)
+                    {
+                        KeyLength = Convert.ToInt32(cmbKeyLength.Text.Split(' ')[0]);
+                        randomKey = GenerateRandomKey(KeyLength, CountDay);
+                        if (dosya.writeToFile(hexDecimals, CountDay, randomKey) == true)
+                            state = true;
+                    }
+                }
+                else
+                {
+                    // lblError.Text = "Wrong or missing input." + Environment.NewLine + "Please Check informations";
+                    /* if (txtLocation.Text == "")
+                        lblError.Text = "Please Choose Location";*/
+                }
+
+                if (state == true)
+                {
+                    lblError.ForeColor = Color.Black;
+                    lblError.Text = "Keys are generating. Please wait...";
+                    Thread threadWait = new Thread(new ThreadStart(Wait));
+                    threadWait.Start();
+                    threadWait.Join();
+                    lblError.ForeColor = Color.Green;
+                    lblError.Text =CountDay + " daily keys are successfully generated.";
+                    int splitPosition = dosya.getFilePath().LastIndexOf("EncKey_");
+                    string a;
+                    if (splitPosition != -1)
+                    {
+                        a = dosya.getFilePath().Substring(splitPosition);
+                        lblLink.Text = dosya.getFilePath().Replace(a, "");
+                        state = false;
+
+                    }
+                    else
+                    {
+                        lblError.ForeColor = Color.Red;
+                        lblError.Text = "Error. Keys are not generated !";
+                    }
+
                 }
             }
-            else if (rdoBlowFish.Checked == true)
+            else if (ControlCalendar(dateStart, dateEnd) == -1)
             {
-                if (BlowFishKeyLength(cmbKeyLength.Text) == true && CountDay != 0)
-                {
-                    KeyLength = Convert.ToInt32(cmbKeyLength.Text.Split(' ')[0]);
-                    randomKey = GenerateRandomKey(KeyLength, CountDay);
-                   if(dosya.writeToFile(hexDecimals, CountDay,randomKey)==true)
-                        state = true;
-                }
+                lblError.ForeColor = Color.Red;
+                lblError.Text = "Start date can not be bigger than end date.";
+            }
+            else if (ControlCalendar(dateStart, dateEnd) == -2)
+            {
+                lblError.ForeColor = Color.Red;
+                lblError.Text = "Day count can not more than 30.";
+            }
+            else if (ControlCalendar(dateStart, dateEnd) == -3)
+            {
+                lblError.ForeColor = Color.Red;
+                lblError.Text = "Date can not select before today.";
+
             }
             else
             {
-                // lblError.Text = "Wrong or missing input." + Environment.NewLine + "Please Check informations";
-                /* if (txtLocation.Text == "")
-                    lblError.Text = "Please Choose Location";*/
+                lblError.ForeColor = Color.Red;
+                lblError.Text = "Diffferent Error.";
             }
 
-            if (state == true)
-            {
 
-                lblError.Text = "Keys are generating. Please wait...";
-                Thread threadWait = new Thread(new ThreadStart(Wait));
-                threadWait.Start();
-                threadWait.Join();
-                lblError.Text = "Keys are successfully generated";
-                state = false;
+
+
             }
-            
-         
-
-
-        }
+        
 
         #region Control Key Count and set Key Count
         private int ControlKeyCount(DateTime start, DateTime end)
@@ -212,6 +253,48 @@ namespace GenerateKey
         }
         #endregion
 
+        private int ControlCalendar(DateTime dateStart, DateTime dateEnd)
+        {
+
+            if (!ControlBeginOfDate(dateStart, dateEnd))
+                return -3;
+            else if (!ControlDate(dateStart, dateEnd))
+                return -1;
+            else if (!ControlDayCount(dateStart, dateEnd))
+                return -2; 
+            else
+                return 1;
+            
+
+        }
+
+        private bool ControlDayCount(DateTime dateStart, DateTime dateEnd)
+        {
+            TimeSpan diff = new TimeSpan();
+            diff = dateEnd - dateStart;
+            if (diff.Days + 1 > 30)
+                return false;
+            else
+                return true;
+              
+        }
+
+        private bool ControlDate(DateTime dateStart, DateTime dateEnd)
+        {
+
+            if (dateEnd >= dateStart)
+                return true;
+            else
+                return false;
+        }
+
+        private bool ControlBeginOfDate(DateTime start,DateTime end)
+        {
+            if (start < DateTime.Today || end<DateTime.Today)
+                return false;
+            else
+                return true;
+        }
 
         private void txtLocation_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -221,12 +304,71 @@ namespace GenerateKey
         private void frmKeyGenerate_Load(object sender, EventArgs e)
         {
             rdoAES.Checked = true;
-           
+            //lblVersion.Text = Assembly.GetEntryAssembly().GetName().Version.ToString();
+            //lblProductName.Text = Application.ProductName;
+            Assembly asm = Assembly.GetExecutingAssembly();
+            object[] obj = asm.GetCustomAttributes(false);
+            foreach (object o in obj)
+            {
+                if (o.GetType() ==
+                    typeof(System.Reflection.AssemblyCopyrightAttribute))
+                {
+                    AssemblyCopyrightAttribute ac =
+            (AssemblyCopyrightAttribute)o;
+                    lblCopyright.Text = ac.Copyright;
+                }
+
+                else if (o.GetType() == typeof(AssemblyProductAttribute))
+                {
+                    AssemblyProductAttribute ap = (AssemblyProductAttribute)o;
+                    lblProductName.Text = ap.Product;
+                }
+
+                else if(o.GetType()==typeof(AssemblyFileVersionAttribute))
+                {
+                    AssemblyFileVersionAttribute av = (AssemblyFileVersionAttribute)o;
+                    lblVersion.Text = "Version " + av.Version;
+                }
+            }
+
+            dtpStart.MinDate = DateTime.Today;
+            dtpEnd.MaxDate = DateTime.Today.AddDays(30);
+            dtpEnd.MinDate = DateTime.Today;
         }
+
 
         private void groupBox2_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void lblAlgorithm_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabGenerator_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(lblLink.Text);
+            lblLink.LinkVisited = true;
+        }
+
+        private void dtpEnd_ValueChanged(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void dtpStart_ValueChanged(object sender, EventArgs e)
+        {
+            DateTime time = dtpStart.Value;
+            time=time.AddDays(30);
+            dtpEnd.MaxDate = time;
+            dtpEnd.MinDate = dtpStart.Value;
         }
     }
 }
