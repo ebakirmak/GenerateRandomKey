@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -62,7 +63,15 @@ namespace GenerateKey
         private void EditFilePath()
         {
             //get document path in pc
-            string path = Directory.GetParent(Environment.GetFolderPath(Environment.SpecialFolder.Desktop)).FullName;
+            CultureInfo info = CultureInfo.CurrentUICulture;
+            string path;
+            //if (info.Name == "en-US")
+            //    path = @"C:/Documents";
+            //else if (info.Name == "tr-TR")
+            //    path = @"C:/Belgelerim";
+            //else
+                path = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents");
+            
             //if dont have EncryKey folder, its creates a EncryKey 
             if (!Directory.Exists(path + @"\EncKey"))
                 Directory.CreateDirectory(path + @"\EncKey");

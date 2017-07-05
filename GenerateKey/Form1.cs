@@ -34,7 +34,7 @@ namespace GenerateKey
         private void btnGenerate_Click(object sender, EventArgs e)
         {
             lblLink.Text = "";
-
+            lblError.Text = "";
 
             int CountDay = 0;
             int KeyLength = 0;

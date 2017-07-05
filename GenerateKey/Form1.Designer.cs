@@ -153,7 +153,6 @@
             this.dtpStart.Name = "dtpStart";
             this.dtpStart.Size = new System.Drawing.Size(147, 20);
             this.dtpStart.TabIndex = 19;
-            this.dtpStart.ValueChanged += new System.EventHandler(this.dtpStart_ValueChanged);
             // 
             // tabMain
             // 
@@ -270,7 +269,7 @@
             // lblLink
             // 
             this.lblLink.AutoSize = true;
-            this.lblLink.Location = new System.Drawing.Point(13, 199);
+            this.lblLink.Location = new System.Drawing.Point(13, 203);
             this.lblLink.Name = "lblLink";
             this.lblLink.Size = new System.Drawing.Size(0, 13);
             this.lblLink.TabIndex = 25;
