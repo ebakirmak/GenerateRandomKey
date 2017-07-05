@@ -45,8 +45,8 @@ namespace GenerateKey
                 {
                     KeyLength = Convert.ToInt32(cmbKeyLength.Text.Split(' ')[0]);
                     randomKey = GenerateRandomKey(KeyLength, CountDay);                   
-                    dosya.writeToFile(hexDecimals, CountDay,randomKey);
-                    state = true;
+                    if(dosya.writeToFile(hexDecimals, CountDay,randomKey)==true)
+                        state = true;
                 }
             }
             else if (rdoBlowFish.Checked == true  && cmbCountDay.Text!="" && txtLocation.Text != "")
@@ -55,19 +55,15 @@ namespace GenerateKey
                 {
                     KeyLength = Convert.ToInt32(cmbKeyLength.Text.Split(' ')[0]);
                     randomKey = GenerateRandomKey(KeyLength, CountDay);
-                    dosya.writeToFile(hexDecimals, CountDay,randomKey);
-                    state = true;
+                   if(dosya.writeToFile(hexDecimals, CountDay,randomKey)==true)
+                        state = true;
                 }
             }
             else
             {
-                lblError.Text = "Wrong or missing input." + Environment.NewLine + "Please Check informations";
-                //if (cmbCountDay.Text == "")
-                //     MessageBox.Show("Please Select a algorithm");
-                //else if(cmbCountDay.Text == "")
-                //    MessageBox.Show("Please Select Key Count");
-                //else if(txtLocation.Text== "")
-                //    MessageBox.Show("Please Choose Location");
+                // lblError.Text = "Wrong or missing input." + Environment.NewLine + "Please Check informations";
+                 if (txtLocation.Text == "")
+                    lblError.Text = "Please Choose Location";
             }
 
             if (state == true)
@@ -115,13 +111,15 @@ namespace GenerateKey
                     return true;
                 else
                 {
-                    MessageBox.Show("AES Key is Wrong");
+                    lblError.Text = "Wrong or missing input" + Environment.NewLine + "Please Check informations";
+                    //MessageBox.Show("AES Key is Wrong");
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("AES Key is Wrong");
+                lblError.Text = "Wrong or missing input" + Environment.NewLine + "Please Check informations";
+                //MessageBox.Show("AES Key is Wrong");
                 ex.ToString();
                 return false;
             }
@@ -138,13 +136,15 @@ namespace GenerateKey
                 if (len >= 32 && len <= 448 && len % 8 == 0)
                     return true;
                 else {
-                    MessageBox.Show("BlowFish Key is Wrong");
+                    lblError.Text = "Wrong or missing input" + Environment.NewLine + "Please Check informations";
+                    // MessageBox.Show("BlowFish Key is Wrong");
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("BlowFish Key is Wrong");
+                lblError.Text = "Wrong or missing input" + Environment.NewLine + "Please Check informations";
+                //MessageBox.Show("BlowFish Key is Wrong");
                 ex.ToString();
                 return false;
             }
@@ -193,43 +193,28 @@ namespace GenerateKey
          }*/
         #endregion      
 
-        #region Show bit value by algorith in combobox object
-        private void cmbKeyLength_Click(object sender, EventArgs e)
-        {
-            if (rdoAES.Checked==true)
+        #region Clear combobox object
+        private void rdoAES_CheckedChanged(object sender, EventArgs e)
+        {  if (rdoAES.Checked == true)
             {
                 cmbKeyLength.Items.Clear();
                 cmbKeyLength.Items.Add("128 Bit");
                 cmbKeyLength.Items.Add("192 Bit");
                 cmbKeyLength.Items.Add("256 Bit");
+               
             }
             else if (rdoBlowFish.Checked == true)
             {
                 cmbKeyLength.Items.Clear();
-                for (int i = 32; i <= 448; i+=8)
+                for (int i = 32; i <= 448; i += 8)
                 {
                     cmbKeyLength.Items.Add(i + " Bit");
                 }
+               
             }
-            else
-            {
-                cmbKeyLength.Items.Clear();
-                cmbKeyLength.Text="Select a Algorithm";
-            }
+            cmbKeyLength.Text = cmbKeyLength.Items[0].ToString();
         }
         #endregion
-
-        #region Clear combobox object
-        private void rdoAES_CheckedChanged(object sender, EventArgs e)
-        {
-            cmbKeyLength.Text = "";
-        }
-        #endregion
-
-        private void frmKeyGenerate_Load(object sender, EventArgs e)
-        {
-           
-        }
 
         private void btnLocation_Click(object sender, EventArgs e)
         {
@@ -244,6 +229,12 @@ namespace GenerateKey
         private void txtLocation_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = true;
+        }
+
+        private void frmKeyGenerate_Load(object sender, EventArgs e)
+        {
+            rdoAES.Checked = true;
+            cmbCountDay.Text = cmbCountDay.Items[0].ToString();
         }
     }
 }

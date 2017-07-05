@@ -11,29 +11,52 @@ namespace GenerateKey
     public class Dossier
     {
         private string FilePath { get; set; }
-
+        public FileStream file { get; set; }
+        public StreamWriter fileWrite { get; set; }
+        DateTime time;
         public Dossier()
         {        
             this.FilePath = "";
+
         }
 
         #region Write to file all random key in hex format 
-        public void writeToFile(string[] hexDecimals, int countDay,string [] randomKey)
+        public bool writeToFile(string[] hexDecimals, int countDay,string [] randomKey)
         {
-
-        
-            FileStream fs = new FileStream(FilePath, FileMode.Create, FileAccess.ReadWrite);
-            StreamWriter sw = new StreamWriter(fs);
-            DateTime today = DateTime.Today;
-
-            for (int i = 0; i < countDay; i++)
+            bool state = true;
+            try
             {
-                sw.WriteLine(today.ToShortDateString() + "  " + (i + 1) + ".Key: " + hexDecimals[i] + "   Random Key: " + randomKey[i]);
-                today = today.AddDays(1);
+               this.file = new FileStream(FilePath, FileMode.Create, FileAccess.ReadWrite);
+               this.fileWrite = new StreamWriter(file);
+               this.time = DateTime.Today;
+               
+                for (int i = 0; i < countDay; i++)
+                {
+                    fileWrite.WriteLine(time.ToShortDateString() + "  " + (i + 1) + ".Key: " + hexDecimals[i] + "   Random Key: " + randomKey[i]);
+                    time = time.AddDays(1);
+                }
+                object m = null;
+                string s = m.ToString();
             }
-            sw.Flush();
-            sw.Close();
-            fs.Close();
+            catch (Exception ex)
+            {
+                ex.ToString();
+                state = false;
+                 
+            }
+            finally
+            {
+                fileWrite.Flush();
+                fileWrite.Close();
+                fileWrite.Close();
+                if (state == false)
+                {
+                    if (File.Exists(this.FilePath))
+                        File.Delete(this.FilePath);
+                }
+               
+            }
+            return state;
         }
         #endregion
 
@@ -65,7 +88,7 @@ namespace GenerateKey
             FolderBrowserDialog fbd = new FolderBrowserDialog();
         
             if (fbd.ShowDialog() == DialogResult.OK) { 
-           this.FilePath = fbd.SelectedPath+"\\HexKeys.txt";
+           this.FilePath = fbd.SelectedPath+"\\Keys.txt";
                 return FilePath;
             }
             else
