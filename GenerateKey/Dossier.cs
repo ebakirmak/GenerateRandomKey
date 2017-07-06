@@ -60,6 +60,7 @@ namespace GenerateKey
         }
         #endregion
 
+        #region File Path Edit
         private void EditFilePath()
         {
             //get document path in pc
@@ -81,11 +82,14 @@ namespace GenerateKey
             this.FilePath = path + @"\EncKey\EncKey_" + time.ToShortDateString() + "_" + time.ToLongTimeString().ToString().Replace(":", "") + ".txt";
 
         }
+        #endregion
 
+        #region Get File Path
         public string getFilePath()
         {
             return this.FilePath;
         }
+        #endregion
 
     }
 }

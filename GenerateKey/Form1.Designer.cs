@@ -185,8 +185,6 @@
             this.tabGenerator.Size = new System.Drawing.Size(413, 241);
             this.tabGenerator.TabIndex = 0;
             this.tabGenerator.Text = "Generator";
-            this.tabGenerator.Click += new System.EventHandler(this.tabGenerator_Click);
-            this.tabGenerator.ChangeUICues += new System.Windows.Forms.UICuesEventHandler(this.tabGenerator_ChangeUICues);
             // 
             // lblLink
             // 
@@ -288,15 +286,6 @@
             this.Tag = "alg";
             this.Text = "Encryption Key Generator SW ";
             this.Load += new System.EventHandler(this.frmKeyGenerate_Load);
-            this.ClientSizeChanged += new System.EventHandler(this.frmKeyGenerate_ClientSizeChanged);
-            this.CursorChanged += new System.EventHandler(this.frmKeyGenerate_CursorChanged);
-            this.DockChanged += new System.EventHandler(this.frmKeyGenerate_DockChanged);
-            this.EnabledChanged += new System.EventHandler(this.frmKeyGenerate_EnabledChanged);
-            this.RegionChanged += new System.EventHandler(this.frmKeyGenerate_RegionChanged);
-            this.VisibleChanged += new System.EventHandler(this.frmKeyGenerate_VisibleChanged);
-            this.MouseCaptureChanged += new System.EventHandler(this.frmKeyGenerate_MouseCaptureChanged);
-            this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.frmKeyGenerate_PreviewKeyDown);
-            this.ChangeUICues += new System.Windows.Forms.UICuesEventHandler(this.frmKeyGenerate_ChangeUICues);
             this.tabMain.ResumeLayout(false);
             this.tabGenerator.ResumeLayout(false);
             this.tabGenerator.PerformLayout();

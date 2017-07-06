@@ -19,6 +19,8 @@ namespace GenerateKey
         {
             InitializeComponent();
             dosya = new Dossier();
+            controllerList = new List<Control>();
+            control = new Controls();
         }
         private string []  hexDecimals;
         private string[] randomKey;
@@ -26,6 +28,9 @@ namespace GenerateKey
         private bool state = false;
         private DateTime dateStart;
         private DateTime dateEnd;
+        List<Control> controllerList;
+        public Controls control;
+        
         private void Wait()
         {
             Thread.Sleep(1000);
@@ -42,15 +47,15 @@ namespace GenerateKey
             dateStart = dtpStart.Value.Date;
             dateEnd = dtpEnd.Value.Date;
 
-            if (ControlCalendar(dateStart, dateEnd) == 1)
+            if (control.ControlCalendar(dateStart, dateEnd)== 1)
             {
-                CountDay = ControlKeyCount(dateStart, dateEnd);
+                CountDay = control.ControlKeyCount(dateStart, dateEnd);
 
                 hexDecimals = new string[CountDay];
                 randomKey = new string[CountDay];
                 if (rdoAES.Checked == true)
                 {
-                    if (AESKeyLength(cmbKeyLength.Text) == true && CountDay != 0)
+                    if (control.AESKeyLength(cmbKeyLength.Text,lblError.Text) == true && CountDay != 0)
                     {
                         KeyLength = Convert.ToInt32(cmbKeyLength.Text.Split(' ')[0]);
                         randomKey = GenerateRandomKey(KeyLength, CountDay);
@@ -60,7 +65,7 @@ namespace GenerateKey
                 }
                 else if (rdoBlowFish.Checked == true)
                 {
-                    if (BlowFishKeyLength(cmbKeyLength.Text) == true && CountDay != 0)
+                    if (control.BlowFishKeyLength(cmbKeyLength.Text, lblError.Text) == true && CountDay != 0)
                     {
                         KeyLength = Convert.ToInt32(cmbKeyLength.Text.Split(' ')[0]);
                         randomKey = GenerateRandomKey(KeyLength, CountDay);
@@ -101,17 +106,17 @@ namespace GenerateKey
 
                 }
             }
-            else if (ControlCalendar(dateStart, dateEnd) == -1)
+            else if (control.ControlCalendar(dateStart, dateEnd) == -1)
             {
                 lblError.ForeColor = Color.Red;
                 lblError.Text = "Start date can not be bigger than end date.";
             }
-            else if (ControlCalendar(dateStart, dateEnd) == -2)
+            else if (control.ControlCalendar(dateStart, dateEnd) == -2)
             {
                 lblError.ForeColor = Color.Red;
                 lblError.Text = "Day count can not more than 30.";
             }
-            else if (ControlCalendar(dateStart, dateEnd) == -3)
+            else if (control.ControlCalendar(dateStart, dateEnd) == -3)
             {
                 lblError.ForeColor = Color.Red;
                 lblError.Text = "Date can not select before today.";
@@ -122,72 +127,8 @@ namespace GenerateKey
                 lblError.ForeColor = Color.Red;
                 lblError.Text = "Diffferent Error.";
             }
-
-
-
-
             }
-        
-
-        #region Control Key Count and set Key Count
-        private int ControlKeyCount(DateTime start, DateTime end)
-        {
-            TimeSpan different = new TimeSpan();
-            different = end - start;
-            return different.Days+1;
-        }
-        #endregion
-
-        #region Control AES Key Length
-        private bool AESKeyLength (String KeyLength)
-        {
-            try
-            {
-                int len = Convert.ToInt32(KeyLength.Split(' ')[0]);
-                if (len == 128 || len == 192 || len == 256)
-                    return true;
-                else
-                {
-                    lblError.Text = "Wrong or missing input" + Environment.NewLine + "Please Check informations";
-                    //MessageBox.Show("AES Key is Wrong");
-                    return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                lblError.Text = "Wrong or missing input" + Environment.NewLine + "Please Check informations";
-                //MessageBox.Show("AES Key is Wrong");
-                ex.ToString();
-                return false;
-            }
-            
-        }
-        #endregion
-
-        #region Control BlowFish Key Length
-        private bool BlowFishKeyLength(String KeyLength)
-        {
-            try
-            {
-                int len = Convert.ToInt32(KeyLength.Split(' ')[0]);
-                if (len >= 32 && len <= 448 && len % 8 == 0)
-                    return true;
-                else {
-                    lblError.Text = "Wrong or missing input" + Environment.NewLine + "Please Check informations";
-                    // MessageBox.Show("BlowFish Key is Wrong");
-                    return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                lblError.Text = "Wrong or missing input" + Environment.NewLine + "Please Check informations";
-                //MessageBox.Show("BlowFish Key is Wrong");
-                ex.ToString();
-                return false;
-            }
-        }
-        #endregion
-
+ 
         #region Generate Random Key
         private string[] GenerateRandomKey(int keyLength,int countDay)
         {
@@ -201,9 +142,13 @@ namespace GenerateKey
                 string currentHex = "";
                 for (int j = 0; j < keyLength / 8; j++)
                 {
+
                     int rInt = random.Next(0, 255);
                     currentKey += rInt+"-";
-                    currentHex += rInt.ToString("X");
+                    if(rInt<16)
+                        currentHex += "0"+rInt.ToString("X");
+                    else
+                        currentHex += rInt.ToString("X");
                 }
                 randomKeys[i] = currentKey;
                 hexDecimals[i] = currentHex;
@@ -253,53 +198,14 @@ namespace GenerateKey
         }
         #endregion
 
-        private int ControlCalendar(DateTime dateStart, DateTime dateEnd)
+        #region Clear Label Text
+        public void ClearText()
         {
-
-            if (!ControlBeginOfDate(dateStart, dateEnd))
-                return -3;
-            else if (!ControlDate(dateStart, dateEnd))
-                return -1;
-            else if (!ControlDayCount(dateStart, dateEnd))
-                return -2; 
-            else
-                return 1;
-            
-
+            lblError.Text = "";
+            lblLink.Text = "";
         }
+        #endregion
 
-        private bool ControlDayCount(DateTime dateStart, DateTime dateEnd)
-        {
-            TimeSpan diff = new TimeSpan();
-            diff = dateEnd - dateStart;
-            if (diff.Days + 1 > 30)
-                return false;
-            else
-                return true;
-              
-        }
-
-        private bool ControlDate(DateTime dateStart, DateTime dateEnd)
-        {
-
-            if (dateEnd >= dateStart)
-                return true;
-            else
-                return false;
-        }
-
-        private bool ControlBeginOfDate(DateTime start,DateTime end)
-        {
-            if (start < DateTime.Today || end<DateTime.Today)
-                return false;
-            else
-                return true;
-        }
-
-        private void txtLocation_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = true;
-        }
 
         private void frmKeyGenerate_Load(object sender, EventArgs e)
         {
@@ -329,27 +235,82 @@ namespace GenerateKey
                     AssemblyFileVersionAttribute av = (AssemblyFileVersionAttribute)o;
                     lblVersion.Text = "Version " + av.Version;
                 }
+                
             }
 
             dtpStart.MinDate = DateTime.Today;
             dtpEnd.MaxDate = DateTime.Today.AddDays(29);
             dtpEnd.MinDate = DateTime.Today;
 
-
-
             //get Form Controllers 
-            
+            controllerList = GetSelfAndChildrenRecursive(this).ToList();
+            foreach (var control in controllerList)
+            {
+                if (control.GetType() == typeof(DateTimePicker))
+                {
+
+                    DateTimePicker dtp = (DateTimePicker)control;
+                    dtp.ValueChanged += Dtp_ValueChanged;
+                   
+                }
+                else if(control.GetType()==typeof(RadioButton))
+                {
+                    RadioButton rdo = (RadioButton)control;
+                    rdo.CheckedChanged += Rdo_CheckedChanged;
+                }
+
+                else if(control.GetType()==typeof(ComboBox))
+                {
+                    ComboBox cmb = (ComboBox)control;
+                    cmb.SelectedValueChanged += Cmb_SelectedValueChanged;
+                }
+                else if (control.GetType() == typeof(TabControl))
+                {
+                    TabControl tbp = (TabControl)control;
+                    tbp.Click += Tbp_Click;
+                }
+            }
+
 
         }
 
+        private void Tbp_Click(object sender, EventArgs e)
+        {
+            ClearText();
+        }
 
+        private void Cmb_SelectedValueChanged(object sender, EventArgs e)
+        {
+            ClearText();
+        }
+
+        private void Dtp_ValueChanged(object sender, EventArgs e)
+        {
+            ClearText();
+        }
+
+        private void Rdo_CheckedChanged(object sender, EventArgs e)
+        {
+            ClearText();                 
+        }
+     
+        public IEnumerable<Control> GetSelfAndChildrenRecursive(Control parent)
+        {
+            List<Control> controls = new List<Control>();
+
+            foreach (Control child in parent.Controls)
+            {
+                controls.AddRange(GetSelfAndChildrenRecursive(child));
+            }
+            controls.Add(parent);
+            return controls;
+        }
 
         private void lblLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(lblLink.Text);
             lblLink.LinkVisited = true;
         }
-
       
         private void dtpStart_ValueChanged(object sender, EventArgs e)
         {
@@ -359,59 +320,6 @@ namespace GenerateKey
             dtpEnd.MinDate = dtpStart.Value;
         }
 
-        private void tabGenerator_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void frmKeyGenerate_ChangeUICues(object sender, UICuesEventArgs e)
-        {
- 
-        }
-
-        private void frmKeyGenerate_ClientSizeChanged(object sender, EventArgs e)
-        {
        
-        }
-
-        private void frmKeyGenerate_CursorChanged(object sender, EventArgs e)
-        {
-    
-        }
-
-        private void frmKeyGenerate_DockChanged(object sender, EventArgs e)
-        {
-           
-        }
-
-        private void frmKeyGenerate_EnabledChanged(object sender, EventArgs e)
-        {
-          
-        }
-
-        private void frmKeyGenerate_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-          
-        }
-
-        private void frmKeyGenerate_RegionChanged(object sender, EventArgs e)
-        {
-         
-        }
-
-        private void frmKeyGenerate_VisibleChanged(object sender, EventArgs e)
-        {
-        
-        }
-
-        private void frmKeyGenerate_MouseCaptureChanged(object sender, EventArgs e)
-        {
-           
-        }
-
-        private void tabGenerator_ChangeUICues(object sender, UICuesEventArgs e)
-        {
-       
-        }
     }
 }
