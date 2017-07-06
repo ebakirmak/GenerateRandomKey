@@ -40,15 +40,15 @@
             this.dtpStart = new System.Windows.Forms.DateTimePicker();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabGenerator = new System.Windows.Forms.TabPage();
+            this.lblLink = new System.Windows.Forms.LinkLabel();
+            this.lblEnd = new System.Windows.Forms.Label();
+            this.lblStart = new System.Windows.Forms.Label();
             this.tabHelp = new System.Windows.Forms.TabPage();
             this.tabAbout = new System.Windows.Forms.TabPage();
-            this.lblStart = new System.Windows.Forms.Label();
-            this.lblEnd = new System.Windows.Forms.Label();
-            this.lblProductName = new System.Windows.Forms.Label();
-            this.lblVersion = new System.Windows.Forms.Label();
-            this.lblCopyright = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.lblLink = new System.Windows.Forms.LinkLabel();
+            this.lblCopyright = new System.Windows.Forms.Label();
+            this.lblVersion = new System.Windows.Forms.Label();
+            this.lblProductName = new System.Windows.Forms.Label();
             this.tabMain.SuspendLayout();
             this.tabGenerator.SuspendLayout();
             this.tabAbout.SuspendLayout();
@@ -63,7 +63,6 @@
             this.lblAlgorithm.Size = new System.Drawing.Size(84, 13);
             this.lblAlgorithm.TabIndex = 0;
             this.lblAlgorithm.Text = "Encryption Type";
-            this.lblAlgorithm.Click += new System.EventHandler(this.lblAlgorithm_Click);
             // 
             // lblKeyLength
             // 
@@ -105,10 +104,10 @@
             this.rdoBlowFish.Location = new System.Drawing.Point(206, 21);
             this.rdoBlowFish.Margin = new System.Windows.Forms.Padding(2);
             this.rdoBlowFish.Name = "rdoBlowFish";
-            this.rdoBlowFish.Size = new System.Drawing.Size(80, 20);
+            this.rdoBlowFish.Size = new System.Drawing.Size(75, 20);
             this.rdoBlowFish.TabIndex = 11;
             this.rdoBlowFish.TabStop = true;
-            this.rdoBlowFish.Text = "BlowFish";
+            this.rdoBlowFish.Text = "Blowfish";
             this.rdoBlowFish.UseVisualStyleBackColor = true;
             // 
             // cmbKeyLength
@@ -131,7 +130,7 @@
             this.lblError.AutoSize = true;
             this.lblError.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lblError.ForeColor = System.Drawing.Color.Red;
-            this.lblError.Location = new System.Drawing.Point(13, 184);
+            this.lblError.Location = new System.Drawing.Point(13, 183);
             this.lblError.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblError.Name = "lblError";
             this.lblError.Size = new System.Drawing.Size(0, 16);
@@ -144,7 +143,6 @@
             this.dtpEnd.Name = "dtpEnd";
             this.dtpEnd.Size = new System.Drawing.Size(146, 20);
             this.dtpEnd.TabIndex = 21;
-            this.dtpEnd.ValueChanged += new System.EventHandler(this.dtpEnd_ValueChanged);
             // 
             // dtpStart
             // 
@@ -153,6 +151,7 @@
             this.dtpStart.Name = "dtpStart";
             this.dtpStart.Size = new System.Drawing.Size(147, 20);
             this.dtpStart.TabIndex = 19;
+            this.dtpStart.ValueChanged += new System.EventHandler(this.dtpStart_ValueChanged);
             // 
             // tabMain
             // 
@@ -187,6 +186,34 @@
             this.tabGenerator.TabIndex = 0;
             this.tabGenerator.Text = "Generator";
             this.tabGenerator.Click += new System.EventHandler(this.tabGenerator_Click);
+            this.tabGenerator.ChangeUICues += new System.Windows.Forms.UICuesEventHandler(this.tabGenerator_ChangeUICues);
+            // 
+            // lblLink
+            // 
+            this.lblLink.AutoSize = true;
+            this.lblLink.Location = new System.Drawing.Point(13, 202);
+            this.lblLink.Name = "lblLink";
+            this.lblLink.Size = new System.Drawing.Size(0, 13);
+            this.lblLink.TabIndex = 25;
+            this.lblLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblLink_LinkClicked);
+            // 
+            // lblEnd
+            // 
+            this.lblEnd.AutoSize = true;
+            this.lblEnd.Location = new System.Drawing.Point(13, 118);
+            this.lblEnd.Name = "lblEnd";
+            this.lblEnd.Size = new System.Drawing.Size(52, 13);
+            this.lblEnd.TabIndex = 23;
+            this.lblEnd.Text = "End Date";
+            // 
+            // lblStart
+            // 
+            this.lblStart.AutoSize = true;
+            this.lblStart.Location = new System.Drawing.Point(13, 87);
+            this.lblStart.Name = "lblStart";
+            this.lblStart.Size = new System.Drawing.Size(55, 13);
+            this.lblStart.TabIndex = 22;
+            this.lblStart.Text = "Start Date";
             // 
             // tabHelp
             // 
@@ -211,51 +238,6 @@
             this.tabAbout.TabIndex = 2;
             this.tabAbout.Text = "About";
             // 
-            // lblStart
-            // 
-            this.lblStart.AutoSize = true;
-            this.lblStart.Location = new System.Drawing.Point(13, 87);
-            this.lblStart.Name = "lblStart";
-            this.lblStart.Size = new System.Drawing.Size(55, 13);
-            this.lblStart.TabIndex = 22;
-            this.lblStart.Text = "Start Date";
-            // 
-            // lblEnd
-            // 
-            this.lblEnd.AutoSize = true;
-            this.lblEnd.Location = new System.Drawing.Point(13, 118);
-            this.lblEnd.Name = "lblEnd";
-            this.lblEnd.Size = new System.Drawing.Size(52, 13);
-            this.lblEnd.TabIndex = 23;
-            this.lblEnd.Text = "End Date";
-            // 
-            // lblProductName
-            // 
-            this.lblProductName.AutoSize = true;
-            this.lblProductName.Location = new System.Drawing.Point(13, 24);
-            this.lblProductName.Name = "lblProductName";
-            this.lblProductName.Size = new System.Drawing.Size(35, 13);
-            this.lblProductName.TabIndex = 2;
-            this.lblProductName.Text = "label1";
-            // 
-            // lblVersion
-            // 
-            this.lblVersion.AutoSize = true;
-            this.lblVersion.Location = new System.Drawing.Point(13, 55);
-            this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(35, 13);
-            this.lblVersion.TabIndex = 3;
-            this.lblVersion.Text = "label2";
-            // 
-            // lblCopyright
-            // 
-            this.lblCopyright.AutoSize = true;
-            this.lblCopyright.Location = new System.Drawing.Point(13, 86);
-            this.lblCopyright.Name = "lblCopyright";
-            this.lblCopyright.Size = new System.Drawing.Size(35, 13);
-            this.lblCopyright.TabIndex = 4;
-            this.lblCopyright.Text = "label3";
-            // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
@@ -266,14 +248,32 @@
             this.pictureBox1.TabIndex = 5;
             this.pictureBox1.TabStop = false;
             // 
-            // lblLink
+            // lblCopyright
             // 
-            this.lblLink.AutoSize = true;
-            this.lblLink.Location = new System.Drawing.Point(13, 203);
-            this.lblLink.Name = "lblLink";
-            this.lblLink.Size = new System.Drawing.Size(0, 13);
-            this.lblLink.TabIndex = 25;
-            this.lblLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblLink_LinkClicked);
+            this.lblCopyright.AutoSize = true;
+            this.lblCopyright.Location = new System.Drawing.Point(13, 86);
+            this.lblCopyright.Name = "lblCopyright";
+            this.lblCopyright.Size = new System.Drawing.Size(35, 13);
+            this.lblCopyright.TabIndex = 4;
+            this.lblCopyright.Text = "label3";
+            // 
+            // lblVersion
+            // 
+            this.lblVersion.AutoSize = true;
+            this.lblVersion.Location = new System.Drawing.Point(13, 55);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(35, 13);
+            this.lblVersion.TabIndex = 3;
+            this.lblVersion.Text = "label2";
+            // 
+            // lblProductName
+            // 
+            this.lblProductName.AutoSize = true;
+            this.lblProductName.Location = new System.Drawing.Point(13, 24);
+            this.lblProductName.Name = "lblProductName";
+            this.lblProductName.Size = new System.Drawing.Size(35, 13);
+            this.lblProductName.TabIndex = 2;
+            this.lblProductName.Text = "label1";
             // 
             // frmKeyGenerate
             // 
@@ -286,8 +286,17 @@
             this.Name = "frmKeyGenerate";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Tag = "alg";
-            this.Text = "ENCRYPTİON KEY GENERATOR SW ";
+            this.Text = "Encryption Key Generator SW ";
             this.Load += new System.EventHandler(this.frmKeyGenerate_Load);
+            this.ClientSizeChanged += new System.EventHandler(this.frmKeyGenerate_ClientSizeChanged);
+            this.CursorChanged += new System.EventHandler(this.frmKeyGenerate_CursorChanged);
+            this.DockChanged += new System.EventHandler(this.frmKeyGenerate_DockChanged);
+            this.EnabledChanged += new System.EventHandler(this.frmKeyGenerate_EnabledChanged);
+            this.RegionChanged += new System.EventHandler(this.frmKeyGenerate_RegionChanged);
+            this.VisibleChanged += new System.EventHandler(this.frmKeyGenerate_VisibleChanged);
+            this.MouseCaptureChanged += new System.EventHandler(this.frmKeyGenerate_MouseCaptureChanged);
+            this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.frmKeyGenerate_PreviewKeyDown);
+            this.ChangeUICues += new System.Windows.Forms.UICuesEventHandler(this.frmKeyGenerate_ChangeUICues);
             this.tabMain.ResumeLayout(false);
             this.tabGenerator.ResumeLayout(false);
             this.tabGenerator.PerformLayout();

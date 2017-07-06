@@ -54,7 +54,7 @@ namespace GenerateKey
                     {
                         KeyLength = Convert.ToInt32(cmbKeyLength.Text.Split(' ')[0]);
                         randomKey = GenerateRandomKey(KeyLength, CountDay);
-                        if (dosya.writeToFile(hexDecimals, CountDay, randomKey) == true)
+                        if (dosya.writeToFile(hexDecimals, CountDay, randomKey,dateStart) == true)
                             state = true;
                     }
                 }
@@ -64,7 +64,7 @@ namespace GenerateKey
                     {
                         KeyLength = Convert.ToInt32(cmbKeyLength.Text.Split(' ')[0]);
                         randomKey = GenerateRandomKey(KeyLength, CountDay);
-                        if (dosya.writeToFile(hexDecimals, CountDay, randomKey) == true)
+                        if (dosya.writeToFile(hexDecimals, CountDay, randomKey,dateStart) == true)
                             state = true;
                     }
                 }
@@ -78,12 +78,12 @@ namespace GenerateKey
                 if (state == true)
                 {
                     lblError.ForeColor = Color.Black;
-                    lblError.Text = "Keys are generating. Please wait...";
+                    lblError.Text = "Processing. Please wait...";
                     Thread threadWait = new Thread(new ThreadStart(Wait));
                     threadWait.Start();
                     threadWait.Join();
                     lblError.ForeColor = Color.Green;
-                    lblError.Text =CountDay + " daily keys are successfully generated.";
+                    lblError.Text = "Encryption Keys are generated successfully.";
                     int splitPosition = dosya.getFilePath().LastIndexOf("EncKey_");
                     string a;
                     if (splitPosition != -1)
@@ -332,25 +332,17 @@ namespace GenerateKey
             }
 
             dtpStart.MinDate = DateTime.Today;
-            dtpEnd.MaxDate = DateTime.Today.AddDays(30);
+            dtpEnd.MaxDate = DateTime.Today.AddDays(29);
             dtpEnd.MinDate = DateTime.Today;
-        }
 
 
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
 
-        }
-
-        private void lblAlgorithm_Click(object sender, EventArgs e)
-        {
+            //get Form Controllers 
+            
 
         }
 
-        private void tabGenerator_Click(object sender, EventArgs e)
-        {
 
-        }
 
         private void lblLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -358,17 +350,68 @@ namespace GenerateKey
             lblLink.LinkVisited = true;
         }
 
-        private void dtpEnd_ValueChanged(object sender, EventArgs e)
+      
+        private void dtpStart_ValueChanged(object sender, EventArgs e)
+        {
+            DateTime time = dtpStart.Value;
+            time = time.AddDays(29);
+            dtpEnd.MaxDate = time;
+            dtpEnd.MinDate = dtpStart.Value;
+        }
+
+        private void tabGenerator_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void frmKeyGenerate_ChangeUICues(object sender, UICuesEventArgs e)
+        {
+ 
+        }
+
+        private void frmKeyGenerate_ClientSizeChanged(object sender, EventArgs e)
+        {
+       
+        }
+
+        private void frmKeyGenerate_CursorChanged(object sender, EventArgs e)
+        {
+    
+        }
+
+        private void frmKeyGenerate_DockChanged(object sender, EventArgs e)
         {
            
         }
 
-        private void dtpStart_ValueChanged(object sender, EventArgs e)
+        private void frmKeyGenerate_EnabledChanged(object sender, EventArgs e)
         {
-            DateTime time = dtpStart.Value;
-            time=time.AddDays(30);
-            dtpEnd.MaxDate = time;
-            dtpEnd.MinDate = dtpStart.Value;
+          
+        }
+
+        private void frmKeyGenerate_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+          
+        }
+
+        private void frmKeyGenerate_RegionChanged(object sender, EventArgs e)
+        {
+         
+        }
+
+        private void frmKeyGenerate_VisibleChanged(object sender, EventArgs e)
+        {
+        
+        }
+
+        private void frmKeyGenerate_MouseCaptureChanged(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void tabGenerator_ChangeUICues(object sender, UICuesEventArgs e)
+        {
+       
         }
     }
 }

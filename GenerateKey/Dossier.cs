@@ -21,7 +21,7 @@ namespace GenerateKey
         }
 
         #region Write to file all random key in hex format 
-        public bool writeToFile(string[] hexDecimals, int countDay,string [] randomKey)
+        public bool writeToFile(string[] hexDecimals, int countDay,string [] randomKey,DateTime start)
         {
             bool state = true;
             try
@@ -29,11 +29,11 @@ namespace GenerateKey
                 EditFilePath();
                this.file = new FileStream(FilePath, FileMode.Create, FileAccess.ReadWrite);
                this.fileWrite = new StreamWriter(file);
-               this.time = DateTime.Today;
-               
+                this.time = start;
+
                 for (int i = 0; i < countDay; i++)
                 {
-                    fileWrite.WriteLine(time.ToShortDateString() + "  " + (i + 1) + ".Key: " + hexDecimals[i]);
+                    fileWrite.WriteLine(time.ToShortDateString() + "\t" + hexDecimals[i] +"\t"+ randomKey[i]);
                     time = time.AddDays(1);
                 }
                
