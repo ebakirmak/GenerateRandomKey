@@ -77,8 +77,8 @@ namespace GenerateKey
         }
         #endregion
 
-        #region Get File Path
-        public string getFilePath()
+        #region Get File Name               
+        public string getFilePath()                                                                                 //Dosyanın adını döndüren fonksiyon
         {
             return this.fileName;
         }

@@ -15,3 +15,12 @@ C:\Users\Emre\Desktop\EncryptionKeyGeneratorSW\GenerateKey\obj\Debug\EncryptionK
 C:\Users\Emre\Desktop\EncryptionKeyGeneratorSW\GenerateKey\obj\Debug\GenerateKey.frmKeyGenerate.resources
 C:\Users\Emre\Desktop\EncryptionKeyGeneratorSW\GenerateKey\obj\Debug\EncryptionKeyGeneratorSW.Properties.Resources.resources
 C:\Users\Emre\Desktop\EncryptionKeyGeneratorSW\GenerateKey\obj\Debug\EncryptionKeyGeneratorSW.csproj.GenerateResource.Cache
+C:\Users\Emre\Desktop\i-Marine\Projects\EncryptionKeyGeneratorSW\GenerateKey\obj\Debug\EncryptionKeyGeneratorSW.csprojResolveAssemblyReference.cache
+C:\Users\Emre\Desktop\i-Marine\Projects\EncryptionKeyGeneratorSW\GenerateKey\obj\Debug\GenerateKey.frmKeyGenerate.resources
+C:\Users\Emre\Desktop\i-Marine\Projects\EncryptionKeyGeneratorSW\GenerateKey\obj\Debug\EncryptionKeyGeneratorSW.Properties.Resources.resources
+C:\Users\Emre\Desktop\i-Marine\Projects\EncryptionKeyGeneratorSW\GenerateKey\obj\Debug\EncryptionKeyGeneratorSW.csproj.GenerateResource.Cache
+C:\Users\Emre\Desktop\i-Marine\Projects\EncryptionKeyGeneratorSW\GenerateKey\obj\Debug\EncryptionKeyGeneratorSW.exe
+C:\Users\Emre\Desktop\i-Marine\Projects\EncryptionKeyGeneratorSW\GenerateKey\obj\Debug\EncryptionKeyGeneratorSW.pdb
+C:\Users\Emre\Desktop\i-Marine\Projects\EncryptionKeyGeneratorSW\GenerateKey\bin\Debug\EncryptionKeyGeneratorSW.exe.config
+C:\Users\Emre\Desktop\i-Marine\Projects\EncryptionKeyGeneratorSW\GenerateKey\bin\Debug\EncryptionKeyGeneratorSW.exe
+C:\Users\Emre\Desktop\i-Marine\Projects\EncryptionKeyGeneratorSW\GenerateKey\bin\Debug\EncryptionKeyGeneratorSW.pdb
