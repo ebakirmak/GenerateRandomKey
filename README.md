@@ -1,4 +1,4 @@
 ﻿# GenerateRandomKey
-it's generates random keys
+it's generates random keys!!
 
 Oğuz DÖĞER
