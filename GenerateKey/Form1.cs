@@ -15,25 +15,25 @@ namespace GenerateKey
 {
     public partial class frmKeyGenerate : Form
     {
-        public frmKeyGenerate()
+        public frmKeyGenerate()                                                                
         {
-            InitializeComponent();
+            InitializeComponent();                                                              
             dosya = new Dossier();
             controllerList = new List<Control>();
             control = new Controls();
         }
-        private string []  hexDecimals;
-        private string[] randomKey;
-        public Dossier dosya { get; set; }
-        private bool state = false;
-        private DateTime dateStart;
+        private string[] randomKey;                                                              //Decimal cinsinden sayıların tutulacağı dizi.
+        private string []  hexDecimals;                                                          //Hex cinsinden sayıların tutulacağı dizi.
+        public Dossier dosya { get; set; }                                                       //Dosyalama işlemleri için oluşturulan sınıfın nesnesi.
+        private bool state = false;                                                               //Durum değişkeni.
+        private DateTime dateStart;                                                              //Başlangıç ve bitiş tarihleri.
         private DateTime dateEnd;
-        List<Control> controllerList;
-        public Controls control;
+        List<Control> controllerList;                                                            //Form içindeki kontrollerın tutulduğu liste.
+        public Controls control;                                                                 //Control Fonksiyonlarının tutulduğu sınıfın nesnesi
         
-        private void Wait()
+        private void Wait()                                                                      //İşlemin yapıldığı yazısını görmek için programın beklemesini sağlayan fonksiyon.
         {
-            Thread.Sleep(1000);
+            Thread.Sleep(1000);                                                                   //Programın 1sn beklemesini sağlayan thread fonksiyonu
         }
 
         private void btnGenerate_Click(object sender, EventArgs e)
@@ -41,45 +41,25 @@ namespace GenerateKey
             lblLink.Text = "";
             lblError.Text = "";
 
-            int CountDay = 0;
-            int KeyLength = 0;
+            int dayCount = 0;                                                                      //Oluşturulacak keylerin gün sayısı
+            int KeyLength = 0;                                                                     //Oluşturulacak Keylerin bit uzunluğu
 
-            dateStart = dtpStart.Value.Date;
-            dateEnd = dtpEnd.Value.Date;
+            dateStart = dtpStart.Value.Date;                                                      //Date Time Picker'daki tarih başlangıcını dateStart nesnesine atıyoruz            
+            dateEnd = dtpEnd.Value.Date;                                                          //Tarih bitişini dateEnd nesnesine atıyoruz         
 
-            if (control.ControlCalendar(dateStart, dateEnd)== 1)
-            {
-                CountDay = control.ControlKeyCount(dateStart, dateEnd);
 
-                hexDecimals = new string[CountDay];
-                randomKey = new string[CountDay];
-                if (rdoAES.Checked == true)
-                {
-                    if (control.AESKeyLength(cmbKeyLength.Text,lblError.Text) == true && CountDay != 0)
-                    {
-                        KeyLength = Convert.ToInt32(cmbKeyLength.Text.Split(' ')[0]);
-                        randomKey = GenerateRandomKey(KeyLength, CountDay);
-                        if (dosya.writeToFile(hexDecimals, CountDay, randomKey,dateStart) == true)
-                            state = true;
-                    }
-                }
-                else if (rdoBlowFish.Checked == true)
-                {
-                    if (control.BlowFishKeyLength(cmbKeyLength.Text, lblError.Text) == true && CountDay != 0)
-                    {
-                        KeyLength = Convert.ToInt32(cmbKeyLength.Text.Split(' ')[0]);
-                        randomKey = GenerateRandomKey(KeyLength, CountDay);
-                        if (dosya.writeToFile(hexDecimals, CountDay, randomKey,dateStart) == true)
-                            state = true;
-                    }
-                }
-                else
-                {
-                    // lblError.Text = "Wrong or missing input." + Environment.NewLine + "Please Check informations";
-                    /* if (txtLocation.Text == "")
-                        lblError.Text = "Please Choose Location";*/
-                }
+            dayCount = control.ControlKeyCount(dateStart, dateEnd);                              //Fonksiyon ile seçilen tarihler aradaki gün farkını değişkene atıyoruz.
 
+            randomKey = new string[dayCount];                                                    //Decimal cinsinden tutulacak olan random key dizisi. 
+            hexDecimals = new string[dayCount];                                                  //Hex cinsine dönüştürülen keylerin tutulacağı dizi. 
+
+                   
+            KeyLength = Convert.ToInt32(cmbKeyLength.Text.Split(' ')[0]);                        //Keylength'deki seçilen ifadeden (örn:128 bit) boşluktan sonrasını atıp int cinsine çevirek değişkene atıyoruz.
+            randomKey = GenerateRandomKey(KeyLength, dayCount);                                  //
+            if (dosya.WriteToFile(hexDecimals, dayCount, randomKey,dateStart) == true)
+                state = true;
+                     
+ 
                 if (state == true)
                 {
                     lblError.ForeColor = Color.Black;
@@ -106,49 +86,27 @@ namespace GenerateKey
 
                 }
             }
-            else if (control.ControlCalendar(dateStart, dateEnd) == -1)
-            {
-                lblError.ForeColor = Color.Red;
-                lblError.Text = "Start date can not be bigger than end date.";
-            }
-            else if (control.ControlCalendar(dateStart, dateEnd) == -2)
-            {
-                lblError.ForeColor = Color.Red;
-                lblError.Text = "Day count can not more than 30.";
-            }
-            else if (control.ControlCalendar(dateStart, dateEnd) == -3)
-            {
-                lblError.ForeColor = Color.Red;
-                lblError.Text = "Date can not select before today.";
-
-            }
-            else
-            {
-                lblError.ForeColor = Color.Red;
-                lblError.Text = "Diffferent Error.";
-            }
-            }
+           
  
         #region Generate Random Key
-        private string[] GenerateRandomKey(int keyLength,int countDay)
+        
+        private string[] GenerateRandomKey(int keyLength,int countDay)              //key uzunluğu ve gün sayısını alıyoruz.
         {
-            Random random = new Random();
-            string[] randomKeys = new string[countDay];
+            Random random = new Random();                                           
+            string[] randomKeys = new string[countDay];                             //Decimal cinsinden random keylerin saklanacağı dizi.
 
-
-            for (int i = 0; i < countDay; i++)
+            for (int i = 0; i < countDay; i++)                                      //Gün sayısı kadar .
             {
-                string currentKey = "";
+                string currentKey = "";                                            //string cinsinden tanımlıyoruz.
                 string currentHex = "";
                 for (int j = 0; j < keyLength / 8; j++)
                 {
-
-                    int rInt = random.Next(0, 255);
-                    currentKey += rInt+"-";
+                    int rInt = random.Next(0, 255);                                 //0-255 arasında random sayı üretiyoruz.
+                    currentKey += rInt+"-";                                             
                     if(rInt<16)
-                        currentHex += "0"+rInt.ToString("X");
+                        currentHex += "0"+rInt.ToString("X");                       //ürettiğimiz random sayıyı hex cinsine çevirip Stringe tipine dönüştürerek currentHex değişkenine atıyoruz.
                     else
-                        currentHex += rInt.ToString("X");
+                        currentHex += rInt.ToString("X");                           
                 }
                 randomKeys[i] = currentKey;
                 hexDecimals[i] = currentHex;
@@ -159,23 +117,9 @@ namespace GenerateKey
         }
         #endregion
 
-        #region Convert String to Hex
-        /* private string[] ConvertToHex(string [] randomKeys, int countDay)
-         {
-             string[] hex = new string[countDay];
-             for (int i = 0; i < countDay; i++)
-             {
-                 byte[] bytes = Encoding.Default.GetBytes(randomKeys[i]);
-                 var hexString = BitConverter.ToString(bytes);
-                 hexString = hexString.Replace("-", "");
-                 hex[i] = hexString;
-             }
+           
 
-             return hex;
-         }*/
-        #endregion      
-
-        #region Clear combobox object
+        #region Change combobox object
         private void rdoAES_CheckedChanged(object sender, EventArgs e)
         {  if (rdoAES.Checked == true)
             {
@@ -210,8 +154,7 @@ namespace GenerateKey
         private void frmKeyGenerate_Load(object sender, EventArgs e)
         {
             rdoAES.Checked = true;
-            //lblVersion.Text = Assembly.GetEntryAssembly().GetName().Version.ToString();
-            //lblProductName.Text = Application.ProductName;
+        
             Assembly asm = Assembly.GetExecutingAssembly();
             object[] obj = asm.GetCustomAttributes(false);
             foreach (object o in obj)

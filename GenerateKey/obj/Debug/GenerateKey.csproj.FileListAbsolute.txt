@@ -1,0 +1,18 @@
+C:\Users\Oguz\Documents\01_SOFTWARE\C# Projeler\GenerateRandomKey-master\GenerateKey\bin\Debug\GenerateKey.exe.config
+C:\Users\Oguz\Documents\01_SOFTWARE\C# Projeler\GenerateRandomKey-master\GenerateKey\bin\Debug\GenerateKey.exe
+C:\Users\Oguz\Documents\01_SOFTWARE\C# Projeler\GenerateRandomKey-master\GenerateKey\bin\Debug\GenerateKey.pdb
+C:\Users\Oguz\Documents\01_SOFTWARE\C# Projeler\GenerateRandomKey-master\GenerateKey\obj\Debug\GenerateKey.csprojResolveAssemblyReference.cache
+C:\Users\Oguz\Documents\01_SOFTWARE\C# Projeler\GenerateRandomKey-master\GenerateKey\obj\Debug\GenerateKey.frmKeyGenerate.resources
+C:\Users\Oguz\Documents\01_SOFTWARE\C# Projeler\GenerateRandomKey-master\GenerateKey\obj\Debug\GenerateKey.Properties.Resources.resources
+C:\Users\Oguz\Documents\01_SOFTWARE\C# Projeler\GenerateRandomKey-master\GenerateKey\obj\Debug\GenerateKey.csproj.GenerateResource.Cache
+C:\Users\Oguz\Documents\01_SOFTWARE\C# Projeler\GenerateRandomKey-master\GenerateKey\obj\Debug\GenerateKey.exe
+C:\Users\Oguz\Documents\01_SOFTWARE\C# Projeler\GenerateRandomKey-master\GenerateKey\obj\Debug\GenerateKey.pdb
+C:\Users\Emre\Desktop\GenerateRandomKey\GenerateKey\obj\Debug\GenerateKey.csprojResolveAssemblyReference.cache
+C:\Users\Emre\Desktop\GenerateRandomKey\GenerateKey\obj\Debug\GenerateKey.frmKeyGenerate.resources
+C:\Users\Emre\Desktop\GenerateRandomKey\GenerateKey\obj\Debug\GenerateKey.csproj.GenerateResource.Cache
+C:\Users\Emre\Desktop\GenerateRandomKey\GenerateKey\bin\Debug\EncryptionKeyGeneratorSW.exe.config
+C:\Users\Emre\Desktop\GenerateRandomKey\GenerateKey\bin\Debug\EncryptionKeyGeneratorSW.exe
+C:\Users\Emre\Desktop\GenerateRandomKey\GenerateKey\bin\Debug\EncryptionKeyGeneratorSW.pdb
+C:\Users\Emre\Desktop\GenerateRandomKey\GenerateKey\obj\Debug\EncryptionKeyGeneratorSW.Properties.Resources.resources
+C:\Users\Emre\Desktop\GenerateRandomKey\GenerateKey\obj\Debug\EncryptionKeyGeneratorSW.exe
+C:\Users\Emre\Desktop\GenerateRandomKey\GenerateKey\obj\Debug\EncryptionKeyGeneratorSW.pdb

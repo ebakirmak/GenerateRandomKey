@@ -11,37 +11,37 @@ namespace GenerateKey
 {
     public class Dossier
     {
-        private string FilePath { get; set; }
-        public FileStream file { get; set; }
-        public StreamWriter fileWrite { get; set; }
-        DateTime time;
-        public Dossier()
+        private string fileName { get; set; }                        
+        public FileStream file { get; set; }                         
+        public StreamWriter fileWrite { get; set; }                  
+        DateTime time;                                               
+        public Dossier()                            
         {
            
         }
 
         #region Write to file all random key in hex format 
-        public bool writeToFile(string[] hexDecimals, int countDay,string [] randomKey,DateTime start)
+        public bool WriteToFile(string[] hexDecimals, int countDay,string [] randomKey,DateTime startTime)
         {
             bool state = true;
-            try
+            try                                                                                                      //Dosya yazmada sorun yaşanabilir bu yüzden try catch yapısını kullanıyoruz.
             {
-                EditFilePath();
-               this.file = new FileStream(FilePath, FileMode.Create, FileAccess.ReadWrite);
-               this.fileWrite = new StreamWriter(file);
-                this.time = start;
+                EditFilePath();                                                                                     
+                this.file = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite);                        //FileStream sınıfının cons. parametreleri ile oluşturduğumuz file nesnesinin özelliklerini belirliyoruz.
+                this.fileWrite = new StreamWriter(file);                                                            //oluşturduğumuz file nesenesinin streamwriter ile yazdıyoruz (reel olarak oluşturmuş oluyoruz.).
+                time = startTime;                                                                                  //
 
                 for (int i = 0; i < countDay; i++)
                 {
-                    fileWrite.WriteLine(time.ToShortDateString() + "\t" + hexDecimals[i] +"\t"+ randomKey[i]);
-                    time = time.AddDays(1);
+                    fileWrite.WriteLine(time.ToShortDateString() + "\t" + hexDecimals[i]/* +"\t"+ randomKey[i]*/);      //yarattığımız dosyanın(.txt'nin) İÇİNE istenilen textleri yazıyoruz
+                    time = time.AddDays(1);                                                                         //Günün herseferinde 1 artması için AddDays fonksiyonunu kullanıyoruz
                 }
                
             }
             catch (Exception ex)
             {
                 ex.ToString();
-                state = false;
+                state = false;                                                                                     //Bir hata meydana gelirse bu hatayı kullanıcıya bildirmek için Catch içinde bir bool değişkeni tutuyoruz.
                  
             }
             finally
@@ -49,10 +49,10 @@ namespace GenerateKey
                 fileWrite.Flush();
                 fileWrite.Close();
                 fileWrite.Close();
-                if (state == false)
+                if (state == false)                                                                                 // Eğer dosyaya yazma sırasında bir hata oluşmuşsa(state == false)
                 {
-                    if (File.Exists(this.FilePath))
-                        File.Delete(this.FilePath);
+                    if (File.Exists(this.fileName))                                                                 //Ve bu dosya oluşturulmuşsa                                             
+                        File.Delete(this.fileName);                                                                 //Bu hatalı oluşan dosyayı sil!
                 }
                
             }
@@ -61,25 +61,18 @@ namespace GenerateKey
         #endregion
 
         #region File Path Edit
-        private void EditFilePath()
+        private void EditFilePath ()                                                                           //Key.txt'yi içine atacağımız klasörü oluşturuyoruz(eğer yoksa) ve fileName'i tanımlıyoruz  
         {
-            //get document path in pc
-            CultureInfo info = CultureInfo.CurrentUICulture;
-            string path;
-            //if (info.Name == "en-US")
-            //    path = @"C:/Documents";
-            //else if (info.Name == "tr-TR")
-            //    path = @"C:/Belgelerim";
-            //else
-                path = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents");
+           string path;
+            path = Path.Combine(Environment.ExpandEnvironmentVariables("%userprofile%"), "Documents");       //!!Bu kod sayesinde belgerimin yolunu değişkene atıyoruz.
             
-            //if dont have EncryKey folder, its creates a EncryKey 
-            if (!Directory.Exists(path + @"\EncKey"))
-                Directory.CreateDirectory(path + @"\EncKey");
-            //created date of file 
-            time = DateTime.Now;
-            //set document path and name
-            this.FilePath = path + @"\EncKey\EncKey_" + time.ToShortDateString() + "_" + time.ToLongTimeString().ToString().Replace(":", "") + ".txt";
+            
+            if (!Directory.Exists(path + @"\EncKey"))                                                        //Eğer bu yolda EncKey adında bir dosya yoksa !
+                Directory.CreateDirectory(path + @"\EncKey");                                                //Bu yolda EncKey adlı dosya oluştur
+             
+            time = DateTime.Now;                                                                             //Şuanın tarihini al.(Dosya isminde kullanılacağı için)
+           
+            this.fileName = path + @"\EncKey\EncKey_" + time.ToShortDateString() + "_" + time.ToLongTimeString().ToString().Replace(":", "") + ".txt";   //Dosya ismini istenilen biçimde oluşturuoyuz.
 
         }
         #endregion
@@ -87,7 +80,7 @@ namespace GenerateKey
         #region Get File Path
         public string getFilePath()
         {
-            return this.FilePath;
+            return this.fileName;
         }
         #endregion
 

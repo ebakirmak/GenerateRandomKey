@@ -1,4 +1,4 @@
-# GenerateRandomKey
+﻿# GenerateRandomKey
 it's generates random keys
 
-@odoger Oğuz DÖĞER
+Oğuz DÖĞER
